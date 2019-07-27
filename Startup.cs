@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
+using bracket.Models;
 
 namespace bracket
 {
@@ -34,6 +35,10 @@ namespace bracket
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<Context>(options =>
+            {
+                options.UseNpgsql(Configuration["DbConnectString"]);
+            });
 
             services.AddSpaStaticFiles(configuration =>
             {
