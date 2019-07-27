@@ -37,7 +37,7 @@ namespace bracket
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<Context>(options =>
             {
-                options.UseNpgsql(Configuration["DbConnectString"]);
+                options.UseNpgsql(Configuration["DBInfo:ConnectionString"]);
             });
 
             services.AddSpaStaticFiles(configuration =>
