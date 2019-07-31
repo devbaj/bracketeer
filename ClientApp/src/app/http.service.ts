@@ -9,11 +9,14 @@ export class HttpService {
   constructor(private _http: HttpClient) { }
 
   public createNewContest(data: any) {
-    return this._http.post('/api/contest/create', data);
+    let body: string = JSON.stringify(data);
+    return this._http.post('/api/contest/create', body);
   }
 
   public runPostTest(data: any) {
     console.log('test data fired - service');
-    return this._http.post('/api/post/test', data);
+    var body = {content: JSON.stringify(data)};
+    console.log(body);
+    return this._http.post('/api/post/test', body);
   }
 }

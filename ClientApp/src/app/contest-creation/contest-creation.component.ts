@@ -7,9 +7,9 @@ import { HttpService } from '../http.service';
   styleUrls: ['./contest-creation.component.scss']
 })
 export class ContestCreationComponent implements OnInit {
-  contest = {
-    title: 'TEST CONTEST',
-    maxContestant: 64
+  Contest = {
+    Title: 'TEST CONTEST',
+    MaxContestants: 64
   };
 
   constructor(
@@ -21,7 +21,7 @@ export class ContestCreationComponent implements OnInit {
 
   fireTestData() {
     console.log('Test data fired - component');
-    const observable = this._httpService.runPostTest(this.contest);
+    const observable = this._httpService.runPostTest(this.Contest);
     observable.subscribe(payload => {
       console.log(payload);
     });

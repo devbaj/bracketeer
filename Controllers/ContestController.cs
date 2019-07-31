@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using bracket.Pages;
 using bracket.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace bracket.Controllers
 {
@@ -14,16 +15,17 @@ namespace bracket.Controllers
   {
     [ HttpPost("api/post/test") ]
 
-    public IActionResult TestPost(object data)
+    public IActionResult TestPost([FromBody] ApiModel body)
     {
-      System.Console.WriteLine("Test post route reached");
-      System.Console.WriteLine();
-      CreateContestForm confirmTest = new CreateContestForm();
-      confirmTest.Title = data.GetType().GetProperty("title").GetValue(data)
-        .ToString();
-      confirmTest.MaxContestants = (int) data.GetType()
-        .GetProperty("maxContestants").GetValue(data);
-      return Json(confirmTest);
+      System.Console.WriteLine("***Test post route reached***");
+      System.Console.WriteLine(body);
+      CreateContestForm testContest = JsonConvert.DeserializeObject<CreateContestForm>(body.Content);
+      System.Console.WriteLine(testContest.Title);
+      System.Console.WriteLine(testContest.MaxContestants);
+      var Obj = new {
+        Success = true
+      };
+      return Json(Obj);
     }
 
     [HttpPost("api/contest/create")]
