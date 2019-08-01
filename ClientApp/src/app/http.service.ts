@@ -17,6 +17,6 @@ export class HttpService {
     console.log('test data fired - service');
     var body = {content: JSON.stringify(data)};
     console.log(body);
-    return this._http.post('/api/post/test', body);
+    return this._http.post('/api/contest/create', body);
   }
 }

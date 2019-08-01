@@ -13,7 +13,13 @@ namespace bracket.Controllers
 {
   public class ContestController : Controller
   {
-    [ HttpPost("api/post/test") ]
+    private Context dbContext;
+    public ContestController(Context context)
+    {
+      dbContext = context;
+    }
+
+    [HttpPost("api/post/test")]
 
     public IActionResult TestPost([FromBody] ApiModel body)
     {
@@ -22,28 +28,44 @@ namespace bracket.Controllers
       CreateContestForm testContest = JsonConvert.DeserializeObject<CreateContestForm>(body.Content);
       System.Console.WriteLine(testContest.Title);
       System.Console.WriteLine(testContest.MaxContestants);
-      var Obj = new {
-        Success = true
-      };
-      return Json(Obj);
+      var res = new {Success = true};
+      return Json(res);
     }
 
     [HttpPost("api/contest/create")]
-    public IActionResult CreateNewContest(CreateContestForm formData)
+    public IActionResult CreateNewContest([FromBody] ApiModel body)
     {
       // ** for now, contests will be required to have 2^x participants
-      if (!IsPowerOfTwo(formData.MaxContestants)) {return null;}
-      Contest createdContest = new Contest();
-      createdContest.Title = formData.Title;
-      createdContest.NumberOfSeeds = formData.MaxContestants;
-
-      return Json(createdContest);
-
+      CreateContestForm userInput = JsonConvert
+        .DeserializeObject<CreateContestForm>(body.Content);
+      if (!IsPowerOfTwo(userInput.MaxContestants))
+      {
+        var errorMsg = new
+        {
+          success = false,
+          errorField = "MaxContestants",
+          msg = "Number of contestants must be a power of 2"
+        };
+        return Json(errorMsg);
+      }
+      Contest contestToDB = new Contest();
+      contestToDB.Title = userInput.Title;
+      contestToDB.MaxContestants = userInput.MaxContestants;
+      // TODO add user to contest once users are implemented
+      contestToDB.CreatedAt = DateTime.Now;
+      contestToDB.UpdatedAt = DateTime.Now;
+      System.Console.WriteLine(contestToDB.ToString());
+      dbContext.Contests.Add(contestToDB);
+      var successMsg = new
+      {
+        success = true,
+        contest = Json(contestToDB)
+      };
+      return Json(successMsg);
     }
     public bool IsPowerOfTwo(int x)
     {
       return (x != 0) && ((x & (x - 1)) == 0);
     }
   }
-
 }
