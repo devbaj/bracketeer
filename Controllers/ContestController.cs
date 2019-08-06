@@ -67,5 +67,76 @@ namespace bracket.Controllers
     {
       return (x != 0) && ((x & (x - 1)) == 0);
     }
+
+    [HttpGet("api/contests/readone")]
+    public IActionResult ReadOneContest([FromBody] ApiModel body)
+    {
+      int? contestID = JsonConvert
+        .DeserializeObject<int>(body.Content);
+      if (contestID == null)
+      {
+        return Json(new { success = false });
+      }
+      Contest retrievedContest = dbContext.Contests
+        .SingleOrDefault(c => c.ContestID == contestID);
+      var res = new
+      {
+        success = true,
+        retrievedContest
+      };
+      return Json(res);
+    }
+
+    [HttpGet("api/contests/readall")]
+    public IActionResult ReadAllContests()
+    {
+      List<Contest> AllContests = dbContext.Contests
+        .ToList();
+      var res = new
+      {
+        success = true,
+        AllContests
+      };
+      return Json(res);
+    }
+
+    [HttpPatch("api/contests/update")]
+    public IActionResult UpdateContest([FromBody] ApiModel body)
+    {
+      Contest updateData = JsonConvert
+        .DeserializeObject<Contest>(body.Content);
+      Contest editedContest = dbContext.Contests
+        .SingleOrDefault(c => c.ContestID == updateData.ContestID);
+      editedContest.Title = updateData.Title;
+      if (IsPowerOfTwo(updateData.MaxContestants))
+      {
+        editedContest.MaxContestants = updateData.MaxContestants;
+      }
+      editedContest.UpdatedAt = DateTime.Now;
+      dbContext.SaveChanges();
+      var res = new
+      {
+        success = true,
+        editedContest
+      };
+      return Json(res);
+    }
+
+    [HttpDelete("api/contest/delete")]
+    public IActionResult DeleteContest([FromBody] ApiModel body)
+    {
+      int? contestID = JsonConvert
+        .DeserializeObject<int>(body.Content);
+
+      Contest retrievedContest =  dbContext.Contests
+        .SingleOrDefault(c => c.ContestID == contestID);
+      dbContext.Contests.Remove(retrievedContest);
+      dbContext.SaveChanges()
+      var res = new
+      {
+        success = true
+      };
+      return Json(res);
+    }
   }
 }
