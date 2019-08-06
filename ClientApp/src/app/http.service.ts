@@ -19,4 +19,11 @@ export class HttpService {
     console.log(body);
     return this._http.post('/api/contest/create', body);
   }
+
+  public registerNewUser(data: any) {
+    console.log('user data sent - service');
+    var body = {content: JSON.stringify(data)};
+    console.log(body);
+    return this._http.post('/api/users/create', body);
+  }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BracketDisplayComponent } from './bracket-display/bracket-display.component';
 import { ContestCreationComponent } from './contest-creation/contest-creation.component';
+import { LoginRegisterComponent } from './login-register/login-register.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'contest',
     component: ContestCreationComponent
+  },
+  {
+    path: 'user',
+    component: LoginRegisterComponent
   }
 ];
 

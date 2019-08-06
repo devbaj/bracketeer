@@ -11,6 +11,8 @@ namespace bracket.Models
     public string Surname {get;set;}
     public string Username {get;set;}
     public string Email {get;set;}
+    public bool RedditConnected {get;set;}
+    public string RedditID {get;set;}
     public DateTime Birthdate {get;set;}
     public DateTime CreatedAt {get;set;}
     public DateTime UpdatedAt {get;set;}
