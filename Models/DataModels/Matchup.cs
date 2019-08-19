@@ -13,6 +13,6 @@ namespace bracket.Models
     // public Matchup Right {get;set;}
     // public Matchup Parent {get;set;}
     public DateTime CreatedAt {get;set;}
-    public DateTime UpdateAt {get;set;}
+    public DateTime UpdatedAt {get;set;}
   }
 }

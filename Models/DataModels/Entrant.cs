@@ -16,6 +16,6 @@ namespace bracket.Models
     // ** for now we will access images via user URLs or APIs
     public int VoteCount {get;set;}
     public DateTime CreatedAt {get;set;}
-    public DateTime UpdateAt {get;set;}
+    public DateTime UpdatedAt {get;set;}
   }
 }
