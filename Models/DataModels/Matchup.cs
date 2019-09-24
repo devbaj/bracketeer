@@ -12,6 +12,7 @@ namespace bracket.Models
     // public Matchup Left {get;set;}
     // public Matchup Right {get;set;}
     // public Matchup Parent {get;set;}
+    public bool Active {get;set;}
     public DateTime CreatedAt {get;set;}
     public DateTime UpdatedAt {get;set;}
   }

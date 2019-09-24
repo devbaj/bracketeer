@@ -20,7 +20,6 @@ namespace bracket.Controllers
     }
 
     [HttpPost("api/post/test")]
-
     public IActionResult TestPost([FromBody] ApiModel body)
     {
       System.Console.WriteLine("***Test post route reached***");
@@ -125,13 +124,14 @@ namespace bracket.Controllers
     [HttpDelete("api/contest/delete")]
     public IActionResult DeleteContest([FromBody] ApiModel body)
     {
+
       int? contestID = JsonConvert
         .DeserializeObject<int>(body.Content);
 
-      Contest retrievedContest =  dbContext.Contests
+      Contest retrievedContest = dbContext.Contests
         .SingleOrDefault(c => c.ContestID == contestID);
       dbContext.Contests.Remove(retrievedContest);
-      dbContext.SaveChanges()
+      dbContext.SaveChanges();
       var res = new
       {
         success = true

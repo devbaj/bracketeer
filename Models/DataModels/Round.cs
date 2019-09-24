@@ -9,6 +9,7 @@ namespace bracket.Models
     public int RoundID {get;set;}
     public List<Matchup> Matchups {get;set;}
     public string Title {get;set;}
+    public bool Active {get;set;}
     public DateTime CreatedAt {get;set;}
     public DateTime UpdatedAt {get;set;}
   }
